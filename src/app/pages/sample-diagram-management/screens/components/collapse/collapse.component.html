@@ -1,0 +1,42 @@
+<div *ngFor="let item of departmentList; let indexCollapse = index" class="mb-4">
+  @if (item.code) {
+  <p-panel [header]="item.name" [toggleable]="true" toggler="header" expandIcon="pi pi-angle-down"
+    collapseIcon="pi pi-angle-up" [collapsed]="indexCollapse !== 0" (collapsedChange)="onCollapsedChange($event, item)">
+    <div class="grid align-items-center">
+      <div class="col-4">
+        <p-iconField iconPosition="left" class="w-full">
+          <p-inputIcon styleClass="pi pi-search" />
+          <input type="text" pInputText placeholder="Search" class="w-full" [formControl]="searchControl"
+            (input)="onSearch(searchControl.value, item)" />
+        </p-iconField>
+      </div>
+      <div class="col-8 flex justify-content-end">
+        <p-paginator [first]="dataCollapse[item.code].currentActivePage || pageDefault" [rows]="pageSize"
+          [totalRecords]="dataCollapse[item.code].totalRecords || pageSize" />
+      </div>
+    </div>
+    <div class="grid">
+      <div class="col-4" *ngFor="let diagramItem of dataCollapse[item.code]?.list">
+        <div class="diagram-item-card">
+          <p-image [src]="checkUrlImage(diagramItem.url)" [preview]="true" alt="Image" id="image">
+            <ng-template pTemplate="indicator">
+              <div class="flex gap-2 absolute" style="top: 1rem; right: 1rem">
+                <p-button icon="pi pi-pen-to-square" [rounded]="true" [raised]="true"
+                  (onClick)="onOpenDiagramEditor(diagramItem, item)" (click)="$event.stopPropagation()" />
+                <p-button icon="pi pi-trash" [rounded]="true" [raised]="true" severity="danger"
+                  (click)="$event.stopPropagation()" />
+              </div>
+            </ng-template>
+          </p-image>
+          <p class="diagram-name py-2">{{ diagramItem.name }}</p>
+        </div>
+      </div>
+      @if (dataCollapse[item.code].list.length === 0) {
+      <div class="w-full">
+        <p class="text-center">{{ TITLE.PAGE_NOT_DATA }}</p>
+      </div>
+      }
+    </div>
+  </p-panel>
+  }
+</div>

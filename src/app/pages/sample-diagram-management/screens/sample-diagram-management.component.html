@@ -1,0 +1,10 @@
+<div class="flex justify-content-between align-content-center">
+    <h2>{{TITLE.HEADER}}</h2>
+    <p-button [label]="TITLE.ADD" (click)="onOpenCreate()" />
+</div>
+
+<vks-collapse [departmentList]="departmentList" [dataCollapse]="dataCollapse"
+    (getData)="handleGetDataCollapsed($event)" />
+
+<vks-add-modal [isVisible]="isVisibleCreateModal" [userInfo]="userInfo" [departmentList]="departmentList"
+    (cancel)="onCloseCreateModal()"></vks-add-modal>

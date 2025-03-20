@@ -1,0 +1,153 @@
+<div class="diagram-modal w-full">
+    <p-dialog
+        [modal]="true"
+        [visible]="true"
+        [style]="{ width: '100%', height: '100%', 'max-height': 'unset' }"
+        styleClass="shadow-8 overflow-hidden"
+        [showHeader]="false"
+    >
+        <div class="header-diagram flex justify-content-start align-items-center shadow-1">
+            @if (isEditNameDiagram) {
+                <div class="col-8 pl-4">
+                    <div>
+                        <input type="text" pInputText class="w-6" [formControl]="nameDiagram" />
+                        <p-button label="Đổi tên" class="pl-2" (click)="onClickSaveNameDiagram()" />
+                    </div>
+                    @if (nameDiagram.errors?.required) {
+                        <small class="p-error">{{ TEXT_TITLE.NAME_NOT_NULL }}</small>
+                    }
+                    @if (nameDiagram.errors?.invalidName) {
+                        <small class="p-error">{{ TEXT_TITLE.NAME_NOT_FORMAT }}</small>
+                    }
+                </div>
+            } @else {
+                <div class="col-8 flex justify-content-start align-items-center pl-4 h-full">
+                    <h2 class="pr-4">{{ nameDiagram.value }}</h2>
+                    <p-button icon="pi pi-pen-to-square" [rounded]="true" (click)="onClickEditNameDiagram()" />
+                </div>
+            }
+            <div class="flex justify-content-end align-items-center col-4 pr-4 h-full">
+                <p-button id="saveBtn" [label]="TEXT_TITLE.SAVE" class="mr-2" (onClick)="onClickSaveDiagram()" />
+                <p-button [label]="TEXT_TITLE.CLOSE" text (click)="onCancel()" />
+            </div>
+        </div>
+        <div class="flex h-full w-full">
+            <gojs-palette
+                #myPalette
+                [style]="{ width: '15%', height: '100%' }"
+                [initPalette]="initPalette"
+                [nodeDataArray]="state.paletteNodeData"
+                [divClassName]="paletteDivClassName"
+            >
+            </gojs-palette>
+            <gojs-diagram
+                #myDiagram
+                [style]="{ width: '100%', height: '100%' }"
+                [initDiagram]="initDiagram"
+                [nodeDataArray]="state.diagramNodeData"
+                [linkDataArray]="state.diagramLinkData"
+                [modelData]="state.diagramModelData"
+                [skipsDiagramUpdate]="state.skipsDiagramUpdate"
+                (modelChange)="diagramModelChange($event)"
+                [divClassName]="diagramDivClassName"
+            >
+            </gojs-diagram>
+        </div>
+        <div class="diagram-menu">
+            <p-button class="menu_btn" severity="secondary" icon="pi pi-bars" />
+            <p-panel
+                [header]="TEXT_TITLE.EDIT_NODE_TITLE"
+                [toggleable]="true"
+                toggler="header"
+                expandIcon="pi pi-bars"
+                collapseIcon="pi pi-bars"
+            >
+                @if (state.selectedNodeData.id) {
+                    <div>
+                        @if (!state.selectedNodeData.category || state.selectedNodeData.category === 'TextIcon') {
+                            <div class="flex flex-column gap-2">
+                                <label for="text">{{ TEXT_TITLE.NODE_TEXT }}:</label>
+                                <input
+                                    id="text"
+                                    type="text"
+                                    pInputText
+                                    [value]="convertedNodeData.text"
+                                    (change)="onChangeTextNodeSelected($event)"
+                                />
+                            </div>
+                        }
+                        @if (state.selectedNodeData.font && state.selectedNodeData.font !== '') {
+                            <div class="flex flex-column gap-2 mt-2">
+                                <label for="text_size">{{ TEXT_TITLE.NODE_FONT_SIZE }}:</label>
+                                <p-dropdown
+                                    id="text_size"
+                                    optionLabel="name"
+                                    placeholder="Select a Size"
+                                    [(ngModel)]="convertedNodeData.textFontSize"
+                                    [options]="textFontOptions"
+                                    (onChange)="onChangeTextSizeNodeSelected($event)"
+                                />
+                            </div>
+                        }
+                        @if (state.selectedNodeData.font && state.selectedNodeData.font !== '') {
+                            <div class="flex gap-2 flex-column mt-2">
+                                <label for="text_style">{{ TEXT_TITLE.NODE_FONT_STYLE }}:</label>
+                                <p-selectButton
+                                    id="text_style"
+                                    [options]="textOptions"
+                                    [(ngModel)]="convertedNodeData.textStyle"
+                                    (onChange)="onChangeTextStyleNodeSelected()"
+                                    [multiple]="true"
+                                    optionLabel="label"
+                                    optionValue="value"
+                                />
+                            </div>
+                        }
+                        @if (state.selectedNodeData.font && state.selectedNodeData.font !== '') {
+                            <div class="flex gap-2 flex-column mt-2">
+                                <label for="font">{{ TEXT_TITLE.NODE_FONT }}:</label>
+                                <p-dropdown
+                                    id="font"
+                                    optionLabel="name"
+                                    placeholder="Select a Font"
+                                    [options]="fontOptions"
+                                    [(ngModel)]="convertedNodeData.textFont"
+                                    (onChange)="onChangeTextFontNodeSelected($event)"
+                                />
+                            </div>
+                        }
+                        @if (state.selectedNodeData.stroke) {
+                            <div class="flex align-items-center justify-content-between gap-2 mt-3">
+                                <label for="text_color">{{ TEXT_TITLE.NODE_FONT_COLOR }}:</label>
+                                <p-colorPicker
+                                    id="text_color"
+                                    class="color_picker"
+                                    [(ngModel)]="convertedNodeData.textColor"
+                                    (onChange)="onChangeTextColorNodeSelected($event)"
+                                />
+                            </div>
+                        }
+                        @if (state.selectedNodeData.fill) {
+                            <div class="flex align-items-center justify-content-between gap-2 mt-3">
+                                <label for="background_color">{{ TEXT_TITLE.NODE_BACKGROUND_COLOR }}:</label>
+                                <p-colorPicker
+                                    id="background_color"
+                                    class="color_picker"
+                                    [(ngModel)]="convertedNodeData.backgroundColor"
+                                    (onChange)="onChangeBackgroundColorNodeSelected($event)"
+                                />
+                            </div>
+                        }
+                    </div>
+                } @else {
+                    <div>{{ TEXT_TITLE.NODE_SELECT_TITLE }}</div>
+                }
+                @if (state.selectedNodeData.category && state.selectedNodeData.category !== 'TextIcon') {
+                    <div>
+                        {{ TEXT_TITLE.NODE_SELECT_TITLE_NOT_EDIT }}
+                    </div>
+                }
+            </p-panel>
+        </div>
+    </p-dialog>
+</div>

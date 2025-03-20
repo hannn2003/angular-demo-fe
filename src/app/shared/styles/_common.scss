@@ -1,0 +1,17 @@
+@import './variables';
+:root {
+  --primary-color: $primary-color;
+}
+
+h1, h2, h3, p, label, table, div, span .p-button, button, .p-inputtext, .p-dropdown, label {
+  font-family: 'Roboto', sans-serif;
+}
+
+.bg-none {
+  background: transparent !important;
+}
+
+.outline-none {
+  border: none !important;
+  outline: none !important;
+}

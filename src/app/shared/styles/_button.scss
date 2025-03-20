@@ -1,0 +1,54 @@
+@import './variables';
+
+.p-button {
+  background: $primary-color;
+  border-color: $primary-color;
+}
+
+.p-button-secondary {
+  background: $secondary-color;
+  color: #fff;
+  border-color: $secondary-color;
+}
+
+.p-button-warning {
+  background: $warning-color;
+  color: $text-white;
+  border-color: $warning-color;
+}
+
+.p-button-danger {
+  background: $error-color;
+  color: $text-white;
+  border-color: $error-color;
+}
+
+.p-button-success {
+  background: $success-color;
+  color: $text-white;
+  border-color: $success-color;
+}
+
+.p-button:focus {
+  box-shadow: none;
+}
+
+.p-button.p-button-secondary.p-button-text,
+.p-button.p-button-outlined {
+  background-color: transparent;
+  color: $secondary-color;
+  border-color: transparent;
+}
+
+.p-selectbutton .p-button {
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  color: #4b5563;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.p-dialog .p-dialog-header {
+  .p-dialog-header-icons .p-button {
+    background: transparent;
+  }
+}

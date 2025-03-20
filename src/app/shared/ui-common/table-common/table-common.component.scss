@@ -1,0 +1,14 @@
+@use 'primeflex/primeflex' as *;
+
+.table-common {
+    height: inherit;
+    .toolbar {
+        .title {
+            @include styleclass('flex flex-1 align-items-center text-xl text-surface-700 font-bold');
+        }
+
+        .action-button {
+            @include styleclass('w-max');
+        }
+    }
+}

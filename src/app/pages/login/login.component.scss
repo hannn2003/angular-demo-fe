@@ -1,0 +1,188 @@
+@use "primeflex/primeflex.scss" as *;
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f5f5f5;
+  background-image: url("../../../assets/background-login.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  .form-container,
+  .form-login-pin {
+    background-color: #fcfcfc;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgb(51 51 51 / 50%);
+    width: 30%;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+button.submit-btn {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 10px;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 25px;
+  @include styleclass("bg-red-500");
+}
+
+button.submit-btn:hover {
+  @include styleclass("bg-red-600");
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.error-message {
+  display: flex;
+  justify-content: flex-end;
+  @include styleclass("text-red-500");
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+::ng-deep .p-input-icon-right > .p-inputtext {
+  width: 100%;
+}
+
+::ng-deep .password > .p-password > input {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.display-token-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: #f5f5f5;
+  background-image: url("../../../assets/background-login.png");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: inherit;
+
+  .display-token-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 30%;
+    height: 300px;
+
+    .p-token-content {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  }
+}
+
+.dialog-container {
+  ::ng-deep .p-dialog .p-dialog-header .p-dialog-title {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 2rem;
+  }
+
+  .dialog-content {
+    text-align: center;
+    font-size: 1.5rem;
+  }
+}
+
+.form-input {
+  flex: 2;
+  input {
+    width: 100%;
+  }
+}
+
+.select-mode {
+  top: 5%;
+  right: 5%;
+  ::ng-deep .p-selectbutton {
+    border: none;
+    border-radius: 6px;
+    background-color: #ffffff38 !important;
+    padding: 5px 0;
+    @include styleclass("surface-200 shadow-1");
+    .p-button {
+      background-color: transparent;
+      border: none;
+      .p-button-label {
+        padding: 5px;
+        letter-spacing: 1px;
+      }
+      @include styleclass("text-suface-900");
+    }
+
+    .p-button.p-highlight {
+      @include styleclass("relative text-white z-1");
+      box-shadow: none;
+      &::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 80%;
+        height: 80%;
+        z-index: -1;
+        background-color: var(--primary-600);
+        border-radius: 6px;
+      }
+    }
+  }
+}
+
+.custom-otp-input {
+  width: 45px;
+  font-size: 36px;
+  border: 0 none;
+  appearance: none;
+  text-align: center;
+  transition: all 0.2s;
+  background: transparent;
+  border-bottom: 3px solid var(--surface-500);
+  border-radius: 0;
+  margin: 0 0.2rem;
+}
+
+.custom-otp-input:focus {
+  outline: 0 none;
+  box-shadow: none;
+  border-bottom-color: var(--primary-color);
+}
+
+.error-input {
+  @include styleclass("border-red-600");
+}

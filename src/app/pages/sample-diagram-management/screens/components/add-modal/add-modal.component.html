@@ -1,0 +1,41 @@
+<p-dialog [header]="TITLE.ADD_MODAL_TITLE" [modal]="true" [(visible)]="isVisible" [style]="{ width: '40rem' }"
+  (onHide)="onCancel()">
+  @if(modalData) {
+  <form [formGroup]="modalData">
+    <div class="flex align-items-center gap-3 mb-2 mt-3">
+      <label for="nameDiagram" class="font-semibold w-4">{{ TITLE.NAME_DIAGRAM }}</label>
+      <input pInputText id="nameDiagram" class="w-8" autocomplete="off" formControlName="name" required />
+    </div>
+    @if (modalData.get('name')?.errors?.required && modalData.get('name')?.touched) {
+    <!-- touched để đảm bảo người dùng đã chạm vào trường dữ liệu hay chưa-->
+    <div class="flex align-items-center mb-2">
+      <div class="w-4"></div>
+      <small class="p-error w-8 pl-3">{{ TITLE.NAME_NOT_NULL }}</small>
+    </div>
+    }
+    @if (modalData.get('name')?.errors?.invalidName && modalData.get('name')?.touched) {
+    <div class="flex align-items-center mb-2">
+      <div class="w-4"></div>
+      <small class="p-error w-8 pl-3">{{ TITLE.NAME_NOT_FORMAT }}</small>
+    </div>
+    }
+    <div class="flex align-items-center gap-3 mb-2 mt-3">
+      <label for="department" class="font-semibold w-4">{{ TITLE.DEPARTMENT }}</label>
+      <p-dropdown id="department" [options]="departmentList" formControlName="department" optionLabel="name"
+        optionValue="code" placeholder="Select a Department" appendTo="body" class="w-8" required />
+    </div>
+    @if (modalData.get('department')?.invalid && this.modalData.get('department')?.touched) {
+    <div class="flex align-items-center mb-2">
+      <div class="w-4"></div>
+      <small class="p-error w-8 pl-3">{{ TITLE.DEPARTMENT_NOT_NULL }}</small>
+    </div>
+    }
+  </form>
+  }@else {
+  <div>OK</div>
+  }
+  <div class="flex justify-content-end gap-2 mb-4 mt-4">
+    <p-button [label]="TITLE.CANCEL" severity="secondary" (click)="onCancel()" />
+    <p-button [label]="TITLE.ADD" (click)="onCreate()" />
+  </div>
+</p-dialog>

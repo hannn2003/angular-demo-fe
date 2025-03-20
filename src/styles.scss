@@ -1,0 +1,59 @@
+@use "primeflex/primeflex.scss" as *;
+@import "primeng/resources/primeng.css";
+@import "primeicons/primeicons.css";
+@import "assets/theme.css";
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+// custom base on prime
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight.p-focus {
+  @include styleclass("text-primary-700");
+}
+
+.p-paginator .p-paginator-pages .p-paginator-page {
+  @include styleclass("border-circle");
+}
+
+[ng-reflect-readonly="true"] .p-dropdown {
+  .p-dropdown-label,
+  .p-dropdown-trigger {
+    @include styleclass("surface-200");
+  }
+}
+
+input[readonly] {
+  @include styleclass("surface-200");
+}
+
+// custom tag
+h1 {
+  @include styleclass("mt-0");
+}
+
+label.required::after {
+  content: "*";
+  @include styleclass("text-red-600 ml-2");
+}
+
+span.error-message {
+  @include styleclass("text-red-600 text-xs");
+}
+
+// custom class
+.object {
+  &-contain {
+    object-fit: contain;
+  }
+
+  &-cover {
+    object-fit: cover;
+  }
+}
+
+.disabled {
+  pointer-events: none;
+}

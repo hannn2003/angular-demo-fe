@@ -1,0 +1,28 @@
+<p-dialog [resizable]="false" [(visible)]="isVisible" [style]="{ width: '35%' }" [modal]="showOverlay" [header]="title" [closable]="false">
+    <div class="p-3 body-content">
+        <ng-content></ng-content>
+    </div>
+    @if (!hideCancel || !hideConfirm) {
+        <div class="p-3">
+            <div class="flex justify-content-end gap-2">
+                <p-button
+                    pRipple
+                    raised
+                    *ngIf="!hideCancel"
+                    [label]="textCancel"
+                    [severity]="btnCancelColor"
+                    text
+                    (click)="onCancel()"
+                />
+                <p-button
+                    pRipple
+                    raised
+                    *ngIf="!hideConfirm"
+                    [label]="textConfirm"
+                    [severity]="btnConfirmColor"
+                    (click)="onConfirm()"
+                />
+            </div>
+        </div>
+    }
+</p-dialog>

@@ -1,0 +1,375 @@
+<!-- <div class="login-container w-full">
+    <ng-container *ngIf="modeControl.value; else OFFLINE">
+        <ng-container *ngIf="!isLoginSuccess; else TOKEN">
+            <div class="form-container">
+                <h2>Đăng nhập</h2>
+                <form (ngSubmit)="onSubmitOnlineLogin()">
+                    <div class="form-input">
+                        <div class="input-group">
+                            <p-inputGroup>
+                                <p-inputGroupAddon>
+                                    <i class="pi pi-user"></i>
+                                </p-inputGroupAddon>
+                                <input
+                                    vksUpperCaseDisplay
+                                    pInputText
+                                    placeholder="Username"
+                                    [formControl]="personalId"
+                                    [class.invalid]="
+                                        (personalId.errors?.required && personalId.touched) || !!errors.username
+                                    "
+                                    name="personalId"
+                                />
+                            </p-inputGroup>
+                            @if (personalId.errors?.required && personalId.touched) {
+                                <div class="error-message">Tài khoản là bắt buộc</div>
+                            }
+                            @if (errors.personalId) {
+                                <div class="error-message">{{ errors.personalId }}</div>
+                            }
+                        </div>
+                        <div class="input-group">
+                            <p-inputGroup>
+                                <p-inputGroupAddon>
+                                    <i class="pi pi-lock"></i>
+                                </p-inputGroupAddon>
+                                <p-password
+                                    placeholder="password"
+                                    class="password"
+                                    [formControl]="password"
+                                    [feedback]="false"
+                                    [class.invalid]="
+                                        (password.errors?.required && password.touched) || !!errors.password
+                                    "
+                                    [style]="{ width: '100%' }"
+                                    [toggleMask]="true"
+                                />
+                            </p-inputGroup>
+                            @if (password.errors?.required && password.touched) {
+                                <div class="error-message">Mật khẩu là bắt buộc</div>
+                            }
+                            @if (errors.password) {
+                                <div class="error-message">{{ errors.password }}</div>
+                            }
+                        </div>
+                    </div>
+                    <button
+                        pButton
+                        pRipple
+                        raised
+                        class="submit-btn"
+                        severity="danger"
+                        [disabled]="isLoadingSubmit"
+                        type="submit"
+                    >
+                        @if (isLoadingSubmit) {
+                            <i class="pi pi-spin pi-spinner" style="font-size: 1rem"></i>
+                        } @else {
+                            <span>Đăng nhập</span>
+                        }
+                    </button>
+                </form>
+            </div>
+        </ng-container>
+    </ng-container>
+</div> -->
+
+<!-- <ng-template #TOKEN>
+  <div class="display-token-wrapper">
+    <div class="display-token-container">
+      <div>
+        <h2>Xác thực token</h2>
+        <p class="p-token-content">Vui lòng nhập mã Token đã được gửi vào ô phía dưới để đăng nhập</p>
+        <input
+          type="text"
+          pInputText
+          placeholder="Hãy nhập token"
+          name="inputToken"
+          readonly
+          required
+          [formControl]="inputToken"
+          [style]="{ width: '100%' }"
+        />
+      </div>
+      <button
+        pButton
+        severity="danger"
+        class="submit-btn"
+        [disabled]="!inputToken.getRawValue()?.length"
+        (click)="handleGetFactoryAuthentication()"
+      >
+        @if (!isLoadingFactoryAuth) {
+          <strong>Xác nhận</strong>
+        } @else {
+          <i class="pi pi-spin pi-spinner" style="font-size: 1rem"></i>
+        }
+      </button>
+    </div>
+  </div>
+</ng-template> -->
+.
+<!-- <ng-template #OFFLINE>
+  <div class="form-container">
+    <h2>Xác thực mã pin</h2>
+    <form
+      [formGroup]="loginPinControl"
+      (ngSubmit)="onSubmitOfflineLogin()"
+      class="flex flex-column justify-content-center h-15rem"
+    >
+      <div class="form-content">
+        <p-inputOtp
+          formControlName="pin"
+          class="justify-content-center"
+          [integerOnly]="true"
+          [length]="6"
+          [mask]="true"
+          [style]="{height: '9rem'}"
+        >
+          <ng-template pTemplate="input" let-token let-events="events">
+            <input
+              #inputOtp
+              pInputText
+              class="custom-otp-input"
+              (input)="events.input($event)"
+              (keydown)="events.keydown($event)"
+              type="text"
+              [attr.value]="token"
+              [maxLength]="1" />
+          </ng-template>
+        </p-inputOtp>
+      </div>
+      <button pButton pRipple raised class="submit-btn" severity="danger"
+              type="submit">
+        <span>Đăng nhập</span>
+      </button>
+    </form>
+  </div>
+</ng-template> -->
+
+<!-- Modal required usb online -->
+<!-- <div class="dialog-container">
+  <p-dialog
+    [modal]="true"
+    [(visible)]="isVisibleModalRequireUsbOnline"
+    [style]="{ width: '35rem', height: '20rem' }"
+    (onShow)="onShowModal()"
+    (onHide)="onHideModal()"
+    [closable]="false"
+  >
+    <p-header class="dialog-header">Thông báo</p-header>
+    <p class="dialog-content">Vui lòng cắm USB để đăng nhập hệ thống</p>
+    <p-footer>
+      <div class="dialog-button">
+        @if (isAttachUsbOnline) {
+          <i class="pi pi-spin pi-spinner" style="font-size: 1rem"></i>
+        } @else {
+          <p-button severity="secondary" label="Huỷ" (click)="onDialogVisibleChange(false)" />
+        }
+      </div>
+    </p-footer>
+  </p-dialog>
+</div> -->
+
+<!-- Modal required usb offline -->
+<!-- <div class="dialog-container">
+  <p-dialog
+    [modal]="true"
+    [(visible)]="isVisibleModalRequireUsbOffline"
+    [style]="{ width: '35rem', height: '20rem' }"
+    (onShow)="onShowModal()"
+    (onHide)="onHideModal()"
+    [closable]="false"
+  >
+    <p-header class="dialog-header">Thông báo</p-header>
+    <p class="dialog-content">Vui lòng cắm USB để đăng nhập hệ thống</p>
+    <p-footer>
+      <div class="dialog-button">
+        @if (isAttachUsbOffline) {
+          <i class="pi pi-spin pi-spinner" style="font-size: 1rem"></i>
+        } @else {
+          <p-button severity="secondary" label="Huỷ" (click)="onDialogVisibleChange(false)" />
+        }
+      </div>
+    </p-footer>
+  </p-dialog>
+</div> -->
+
+<!-- Modal required change password -->
+<!-- <p-dialog
+  [modal]="true"
+  [visible]="isVisibleModalChangePassword"
+  [style]="{ width: '40%' }"
+  (onShow)="onShowModal()"
+  (onHide)="onHideModal()"
+  resizable="false"
+  header="Đổi mật khẩu"
+  closable="false"
+>
+  <form
+    [formGroup]="passwordForm"
+    class="p-3 flex flex-column justify-content-between"
+    (ngSubmit)="onSubmitPassword()"
+  >
+    <div class="form-group">
+      <div class="flex mb-3">
+        <label class="flex-1 font-bold required">Mật khẩu hiện tại</label>
+        <div class="form-input">
+          <input pPassword formControlName="password" type="text" />
+          @if (password.errors?.required && password.touched) {
+          <div>
+            <small class="p-error">Mật khẩu hiện tại là bắt buộc</small>
+          </div>
+          } @if (errorPassword?.oldPassword?.length) {
+          <div>
+            <small class="p-error">{{ errorPassword?.oldPassword }}</small>
+          </div>
+          }
+        </div>
+      </div>
+      <div class="flex mb-3">
+        <label class="flex-1 font-bold required">Nhập mật khẩu mới</label>
+        <div class="form-input">
+          <input pPassword formControlName="newPassword" type="text" />
+          @if (isFieldValid('newPassword')) {
+          <div>
+            <small class="p-error">Mật khẩu là bắt buộc</small>
+          </div>
+          } @if (passwordForm.get('newPassword')?.errors?.min) {
+          <div>
+            <small class="p-error"> Mật khẩu phải trên 8 ký tự!</small>
+          </div>
+          } @if (errorPassword?.newPassword?.length) {
+          <div>
+            <small class="p-error">{{ errorPassword?.newPassword }}</small>
+          </div>
+          }
+        </div>
+      </div>
+      <div class="flex mb-3">
+        <label class="flex-1 font-bold required">Nhập lại mật khẩu mới</label>
+        <div class="form-input">
+          <input pPassword formControlName="enterNewPassword" type="text" />
+          @if (isFieldValid('enterNewPassword')) {
+          <div>
+            <small class="p-error">Vui lòng nhập lại mật khẩu</small>
+          </div>
+          } @if (passwordForm.get('enterNewPassword')?.errors?.diffPassword) {
+          <div>
+            <small class="p-error"> Không trùng với mật khẩu ở trên</small>
+          </div>
+          } @if (errorPassword?.confirmPassword?.length) {
+          <div>
+            <small class="p-error">{{ errorPassword?.confirmPassword }}</small>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="flex justify-content-end gap-2 mb-2">
+      <p-button
+        pRipple
+        [loading]="isLoadingChangePassword"
+        severity="secondary"
+        label="Hủy"
+        [outlined]="true"
+        (click)="onToggleChangePasswordModal(false)"
+      ></p-button>
+      <button
+        pButton
+        pRipple
+        type="submit"
+        label="Xác nhận"
+        class="text-center"
+        [loading]="isLoadingChangePassword"
+      ></button>
+    </div>
+  </form>
+</p-dialog> -->
+
+<!-- Modal required change pin code -->
+<!-- <p-dialog
+  [modal]="true"
+  [visible]="isVisibleModalChangePin"
+  [style]="{ width: '30%' }"
+  (onShow)="onShowModal()"
+  (onHide)="onHideModal()"
+  header="Tạo mã pin"
+  closable="false"
+>
+  <form
+    [formGroup]="createPinForm"
+    class="p-3 flex flex-column justify-content-around h-15rem"
+    (ngSubmit)="onCreateNewPin()"
+  >
+    <div class="form-group">
+      <div class="flex mb-3">
+        <label class="flex-1 font-bold required">Nhập mã pin</label>
+        <div class="form-input">
+          <p-inputOtp formControlName="pin" [integerOnly]="true" [length]="6" />
+          @if (isFieldCreatePinValid('pin')) {
+          <div>
+            <small class="p-error">Mã pin là bắt buộc</small>
+          </div>
+          } @if (createPinForm.get('pin')?.errors?.max) {
+          <div>
+            <small class="p-error">Mã pin tối đa 6 ký tự!</small>
+          </div>
+          } @if (errorCreatePin?.pin?.length) {
+          <div>
+            <small class="p-error">{{ errorCreatePin?.pin }}</small>
+          </div>
+          }
+        </div>
+      </div>
+      <div class="flex mb-3">
+        <label class="flex-1 font-bold required">Nhập lại mã pin</label>
+        <div class="form-input">
+          <p-inputOtp
+            formControlName="reEnterPin"
+            [integerOnly]="true"
+            [length]="6"
+          />
+          @if (isFieldCreatePinValid('reEnterPin')) {
+          <div>
+            <small class="p-error">Vui lòng nhập lại mã pin</small>
+          </div>
+          } @if (createPinForm.get('reEnterPin')?.errors?.max) {
+          <div>
+            <small class="p-error">Mã pin tối đa 6 ký tự!</small>
+          </div>
+          } @if (errorCreatePin?.pin2?.length) {
+          <div>
+            <small class="p-error">{{ errorCreatePin?.pin2 }}</small>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="flex justify-content-end gap-2 mb-2">
+      <p-button
+        pRipple
+        text
+        label="Hủy"
+        severity="secondary"
+        [outlined]="true"
+        [loading]="isLoadingChangePin"
+        (click)="onToggleChangePinModal(false)"
+      ></p-button>
+      <button
+        pButton
+        pRipple
+        type="submit"
+        label="Xác nhận"
+        class="text-center"
+        [loading]="isLoadingChangePin"
+      ></button>
+    </div>
+  </form>
+</p-dialog> -->
+
+<!--switch mode-->
+<div class="select-mode absolute">
+  <!-- <p-selectButton [options]="modeOptions" [formControl]="modeControl" optionLabel="label" optionValue="value" /> -->
+</div>

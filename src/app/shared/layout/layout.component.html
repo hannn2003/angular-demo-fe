@@ -1,0 +1,126 @@
+<ng-container>
+  <div class="loading" *ngIf="isLoadingScreen"></div>
+  @if (userInfo$ | async; as userInfo) {
+  <div class="vks-layout">
+    <!-- Remove when unuse url bar-->
+    @if(!APP_CONFIG.production) {
+    <div class="flex justify-content-center align-items-center url-bar">
+      <input
+        pInputText
+        type="text"
+        class="url-search"
+        variant="filled"
+        placeholder="Enter link here"
+        [value]="currentUrl"
+        (keyup.enter)="onEnterInputUrl($event)"
+      />
+    </div>
+    }
+    <div
+      class="h-screen"
+      [class.sidebar-card-prod]="APP_CONFIG.production"
+      [class.sidebar-card-dev]="!APP_CONFIG.production"
+    >
+      <p-sidebar modal="false" [visible]="true" [showCloseIcon]="false">
+        <ng-template pTemplate="header">
+          @if(isOnlineMode) {
+          <div class="w-3 flex align-items-center" (click)="onProfile()">
+            <p-avatar
+              [image]="userInfo.avatar || 'assets/account-avatar.png'"
+              shape="circle"
+              size="large"
+              class="cursor-pointer"
+            />
+          </div>
+          } @else {
+          <div class="w-3 flex align-items-center">
+            <p-avatar
+              [image]="'assets/account-avatar.png'"
+              shape="circle"
+              size="large"
+              class="cursor-pointer"
+            />
+          </div>
+          }
+          <div class="w-9">
+            <div class="mb-1 font-bold">{{ userInfo.fullName || "" }}</div>
+            @if (isOnlineMode){
+            <div class="font-size-14">
+              {{ (userInfo.roleCode | formatRole) || "" }}
+            </div>
+            } @else {
+            <div class="font-size-14">{{ "Chức vụ" }}</div>
+            }
+          </div>
+        </ng-template>
+        <div class="overflow-y-auto align-items-between menu">
+          <ul class="list-none p-3 m-0">
+            <li class="mb-4" *ngIf="currentRole !== RoleAccount.IT_ADMIN">
+              <a
+                class="flex align-items-center justify-content-between cursor-pointer p-3 border-round text-700 surface-100"
+              >
+                <span class="font-medium">
+                  Chế độ
+                  <span class="font-bold font-size-18">{{
+                    nameSwitchMode
+                  }}</span>
+                </span>
+                <p-inputSwitch
+                  [(ngModel)]="isOnlineMode"
+                  (click)="onChangeMode()"
+                />
+              </a>
+            </li>
+            <ng-container *ngIf="isOnlineMode">
+              <ng-container *ngFor="let menuItem of menuItemsConfig">
+                <li
+                  [class.active]="currentActive === menuItem.activeStatus"
+                  (click)="menuItem.action()"
+                >
+                  <a
+                    pRipple
+                    class="flex align-items-center cursor-pointer p-3 border-round-xl text-700 hover:surface-100 transition-duration-150 transition-colors"
+                  >
+                    <i class="font-size-20 mr-3" [class]="menuItem.icon"></i>
+                    <span class="font-medium">{{ menuItem.label }}</span>
+                  </a>
+                </li>
+              </ng-container>
+            </ng-container>
+            <ng-container *ngIf="!isOnlineMode">
+              <li class="active">
+                <a
+                  pRipple
+                  class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors"
+                >
+                  <i class="font-size-20 mb-1 mr-3 pi pi-folder-open"></i>
+                  <span class="font-medium">Quản lý vụ án</span>
+                </a>
+              </li>
+            </ng-container>
+          </ul>
+        </div>
+        <div
+          class="flex align-items-center font-bold cursor-pointer logout-btn"
+        >
+          <ul class="list-none p-3 m-0">
+            <li (click)="onLogOut()">
+              <a
+                pRipple
+                class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors"
+              >
+                <i class="pi pi-sign-in font-size-20 mr-3"></i>
+                <span class="font-medium">Đăng xuất</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </p-sidebar>
+
+      <div class="content">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+  }
+</ng-container>

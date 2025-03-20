@@ -1,0 +1,45 @@
+@import './variables';
+
+.p-inputtext:enabled:focus,
+.p-dropdown:not(.p-disabled):hover,
+.p-dropdown:not(.p-disabled).p-focus{
+  border-color: $secondary-color;
+  box-shadow: none;
+}
+
+.p-inputtext,
+.p-dropdown,
+.p-calendar{
+  width: 100%;
+}
+
+.p-inputtext:enabled:focus,
+{
+  outline: 0 none;
+  outline-offset: 0;
+}
+
+.p-inputtext:enabled:hover {
+  border-color: $secondary-color;
+}
+
+.p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+  background: $success-color;
+}
+
+.p-inputswitch.p-focus .p-inputswitch-slider {
+  box-shadow: none;
+}
+
+label.require {
+  &:after {
+    content: '*';
+    color: $error-color;
+    margin-left: 1px;
+  }
+}
+
+input.invalid,
+.invalid > .p-dropdown{
+  border: 1px solid $error-color;
+}

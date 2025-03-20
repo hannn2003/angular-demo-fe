@@ -1,0 +1,14 @@
+<div class="case-management">
+  <vks-filter-common [fieldsConfig]="filterConfigCase" (filterEvent)="onFilter($event)">
+  </vks-filter-common>
+
+
+  <vks-table-common [data]="listCase" [title]="title" [configHeader]="configHeaderCase" [showPagination]="true"
+    [limitPerPage]="pageSize" [totalRecord]="totalRecord">
+    <ng-container action-button>
+      <button pButton pRipple type="button">Thêm mới
+      </button>
+    </ng-container>
+
+  </vks-table-common>
+</div>

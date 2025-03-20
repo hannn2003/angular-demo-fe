@@ -1,0 +1,39 @@
+@use 'primeflex/primeflex.scss' as *;
+
+.diagram-modal {
+    .myDiagramDiv {
+        background: whitesmoke;
+        height: 100%;
+        width: 100%;
+        position: relative;
+    }
+
+    .myPaletteDiv {
+        background: white;
+        height: 100%;
+    }
+
+    .p-dialog-content {
+        display: flex;
+        position: relative;
+    }
+
+    .header-diagram {
+        @include styleclass('h-6rem absolute left-0 top-0 z-5 w-full bg-white');
+    }
+
+    .diagram-menu {
+        position: absolute;
+        top: 100px;
+        right: 100px;
+        z-index: 10;
+        width: 20vw;
+        background-color: white;
+        .menu_btn {
+            display: none;
+        }
+        .color_picker {
+            width: 55px;
+        }
+    }
+}

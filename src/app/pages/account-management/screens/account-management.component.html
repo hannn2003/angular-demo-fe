@@ -1,0 +1,54 @@
+<div class="account-management">
+  <vks-filter-common [fieldsConfig]="filterConfig" (filterEvent)="onFilter($event)">
+  </vks-filter-common>
+
+  <vks-table-common [data]="listAccount" [title]="title" [configHeader]="configHeader" [showBtnSearch]="true"
+    [showPagination]="true" [totalRecord]="totalRecords" [limitPerPage]="pageSize"
+    (doubleClickRow)="onDoubleClickRow($event)" (searchEvent)="onSearch($event)"
+    (pageChangeEvent)="onPageChange($event)">
+    <ng-container action-button>
+      <button pButton pRipple type="button" (click)="onOpenModal()">
+        Thêm mới
+      </button>
+    </ng-container>
+
+    <ng-template pTemplate="body" let-itemRecord>
+      <p>{{itemRecord.username}}</p>
+      <div class="action-buttons">
+        <div class="card flex justify-content-center">
+          <p-menu #menu [model]="actionConfig" appendTo="body" [popup]="true">
+            <ng-template pTemplate="item" let-itemMenu>
+              <ng-container *ngIf="itemRecord.id === 2; else DEFAULT_MENU">
+                <button pRipple
+                  class="relative overflow-hidden w-full p-link flex align-items-center text-color hover:surface-200 border-noround"
+                  [disabled]="isDisableRemoveButton(itemMenu)">
+                  <a [class.p-disabled]="isDisableRemoveButton(itemMenu)" class="p-menuitem-link p-disabled">
+                    <span [class]="itemMenu.icon"></span>
+                    <span class="ml-2">{{ itemMenu.label }}</span>
+                  </a>
+                </button>
+              </ng-container>
+              <ng-template #DEFAULT_MENU>
+                <button pRipple
+                  class="relative overflow-hidden w-full p-link flex align-items-center text-color hover:surface-200 border-noround">
+                  <a class="p-menuitem-link">
+                    <span [class]="itemMenu.icon"></span>
+                    <span class="ml-2">{{ itemMenu.label }}</span>
+                  </a>
+                </button>
+              </ng-template>
+            </ng-template>
+          </p-menu>
+          <p-button [rounded]="true" [text]="true" (onClick)="menu.toggle($event)" (dblclick)="$event.stopPropagation()"
+            severity="secondary" icon="pi pi-ellipsis-h" />
+        </div>
+      </div>
+    </ng-template>
+  </vks-table-common>
+
+  <p-dialog [modal]="true" [(visible)]="isVisibleModal"
+    [header]="isEditMode ? 'Chinh sua tài khoản' : 'Them moi tai khoan'" [style]="{ width: '50%' }"
+    (onHide)="onCloseModal()">
+    <vks-form-account (unActiveForm)="onCloseModal()" (forward)="onSubmit($event)"></vks-form-account>
+  </p-dialog>
+</div>

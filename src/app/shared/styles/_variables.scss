@@ -1,0 +1,25 @@
+$primary-color: #4051b1;
+$secondary-color: #6b7280;
+$success-color: #4caf50;
+$warning-color: #ffc107;
+$error-color: #f44336;
+
+//Text
+$text-white: #f9fafb;
+$text-color: #333;
+
+//Border
+$border-radius: 6px;
+
+
+//Shadow
+$shadow-color: #cdcdcd;
+
+$min-font-size: 1;
+$max-font-size: 100;
+
+@for $i from $min-font-size through $max-font-size {
+  .font-size-#{$i} {
+    font-size: #{$i}px;
+  }
+}

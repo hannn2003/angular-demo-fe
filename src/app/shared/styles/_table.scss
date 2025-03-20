@@ -1,0 +1,9 @@
+@import './variables';
+.p-datatable .p-datatable-tbody > tr > td{
+  color: $text-color;
+}
+
+.p-datatable .p-datatable-thead > tr > th {
+  color: $text-color;
+}
+

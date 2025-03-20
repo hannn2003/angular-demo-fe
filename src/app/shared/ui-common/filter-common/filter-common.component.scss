@@ -1,0 +1,9 @@
+@use 'primeflex/primeflex.scss' as *;
+
+.filter-common {
+    p-accordion {
+        ::ng-deep label {
+            @include styleclass('mb-1');
+        }
+    }
+}
