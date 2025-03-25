@@ -46,4 +46,8 @@ export class AccountManagementHttpService {
   deleteAccount(accountId: string): Observable<any> {
     return this.accountManagementApiService.deleteAccount(accountId);
   }
+
+  createAccount(data: IAccountForm): Observable<IAccountForm> {
+    return this.accountManagementApiService.createAccount(data);
+  }
 }

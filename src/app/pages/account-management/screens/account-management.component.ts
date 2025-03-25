@@ -25,6 +25,7 @@ import {
   DEFAULT_TABLE_PAGE,
   DEFAULT_TABLE_SIZE,
   ICategoryItem,
+  IDropdownItem,
   KeyAction,
   KeyCategory,
   RoleAccount,
@@ -63,6 +64,7 @@ export class AccountManagementComponent implements OnInit {
   isEditMode = false;
   selectedAccount: IAccountInfo | null = null;
   rolesMap: { [key: number]: string } = {};
+  listRoles: IDropdownItem[] = [];
 
   constructor(
     private accountManagementHttpService: AccountManagementHttpService,
@@ -79,7 +81,6 @@ export class AccountManagementComponent implements OnInit {
       this.categoryService.listCategories$,
     ]).subscribe(([user, category]) => {
       if (!user || !category) return;
-      // console.log(user, category)
       const isAdmin = user.roleCode === RoleAccount.IT_ADMIN;
       const isVienTruong = user.roleCode === RoleAccount.VIEN_TRUONG;
       const isVienPho = user.roleCode === RoleAccount.VIEN_PHO;
@@ -132,7 +133,10 @@ export class AccountManagementComponent implements OnInit {
         console.log('REMOVE');
         return {
           ...action,
-          command: (item: IAccountInfo) => this.onDelete(item),
+          command: (item: any) => {
+            console.log(item.item.command);
+            this.onDelete(item);
+          },
         };
       }
       return action;
@@ -220,11 +224,20 @@ export class AccountManagementComponent implements OnInit {
   }
 
   onSubmit(formData: IAccountForm) {
-    // //TODO: api add new Account
-    // console.log('formData', formData)
-    // void this.router.navigate([ERoute.ACCOUNT_MANAGEMENT + '/detail'], {
-    //     queryParams: { accountId: 2 },
-    // })
+    this.loadingService.showLoading(true);
+    console.log('OK');
+    this.accountManagementHttpService
+      .createAccount(formData)
+      .pipe(finalize(() => this.loadingService.showLoading(false)))
+      .subscribe({
+        next: () => {
+          this.isVisibleModal = false;
+          this.handleGetAccountManagement();
+        },
+        error: (error) => {
+          console.error('Tạo tài khoản thất bại:', error);
+        },
+      });
   }
 
   handleGetAccountManagement() {
@@ -260,6 +273,11 @@ export class AccountManagementComponent implements OnInit {
       acc[role.id] = role.name;
       return acc;
     }, {});
+
+    this.listRoles = roles.map((role: any) => ({
+      label: role.name,
+      value: role.id,
+    }));
   }
 
   handleDeleteAccount(accountId: string) {

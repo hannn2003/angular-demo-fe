@@ -21,7 +21,9 @@ import { FileSelectEvent, FileUpload } from 'primeng/fileupload';
   templateUrl: './form-account.component.html',
   styleUrl: './form-account.component.scss',
 })
-export class FormAccountComponent{
+export class FormAccountComponent {
+  @Input() listRoles: IDropdownItem[] = [];
+
   @Input()
   errors: Record<keyof IAccountForm, string[]> = {
     username: [],
@@ -56,19 +58,6 @@ export class FormAccountComponent{
   submitted = false;
   imageForUpload: (File & { objectURL: string }) | null = null;
 
-  listDepartments: IDropdownItem[] = [
-    { label: 'Phòng ban 1', value: '1' },
-    { label: 'Phòng ban 2', value: '2' },
-  ];
-  listRoles: IDropdownItem[] = [
-    { label: 'Chức vụ 1', value: '1' },
-    { label: 'Chức vụ 2', value: '2' },
-  ];
-  listUnits: IDropdownItem[] = [
-    { label: 'Đơn vị 1', value: '1' },
-    { label: 'Đơn vị 2', value: '2' },
-  ];
-
   accountForm: FormGroup = this.formBuilder.group({
     username: ['', [Validators.required]],
     avatar: ['', Validators.required],
@@ -83,10 +72,13 @@ export class FormAccountComponent{
         Validators.pattern(REGEX_PHONE_NUMBER),
       ]),
     ],
-    password: [{ value: '', disabled: true }],
+    password: ['', Validators.required],
   });
 
   constructor(private formBuilder: FormBuilder) {}
+  ngOnInit() {
+    console.log('Received roles from parent:', this.listRoles);
+  }
 
   onSelectAvatar(event: FileSelectEvent) {
     const files = event.files;
@@ -97,7 +89,7 @@ export class FormAccountComponent{
         ...file,
         objectURL,
       };
-      this.accountForm.controls['avatar'].setValue('objectURL')
+      this.accountForm.controls['avatar'].setValue('objectURL');
     }
 
     if (this.avatarInput?.files.length) {
@@ -119,7 +111,7 @@ export class FormAccountComponent{
   }
 
   onSubmit() {
-    console.log('this.accountForm.valid', this.accountForm.valid)
+    console.log('this.accountForm.valid', this.accountForm.valid);
     if (this.accountForm.valid) {
       this.submitted = false;
       this.forward.emit(this.accountForm.value);

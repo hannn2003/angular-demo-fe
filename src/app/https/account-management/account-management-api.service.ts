@@ -137,4 +137,8 @@ export class AccountManagementApiService {
   getRoles(): Observable<any> {
     return this.http.get(`${this.urlRoles}`);
   }
+
+  createAccount(data: IAccountForm): Observable<IAccountForm> {
+    return this.http.post<IAccountForm>(`${this.urlAccounts}`, data);
+  }
 }
