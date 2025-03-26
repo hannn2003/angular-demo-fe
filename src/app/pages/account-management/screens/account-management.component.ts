@@ -195,16 +195,22 @@ export class AccountManagementComponent implements OnInit {
   }
 
   onEdit(item: IAccountInfo) {
-    console.log('item', item);
+    if (!item?.id) return;
     this.isEditMode = true;
     this.selectedAccount = item;
     this.isVisibleModal = true;
   }
 
   onDelete(item: IAccountInfo) {
-    console.log('selectedAccounttt', item);
     this.selectedAccount = item;
-    // this.handleDeleteAccount(this.selectedAccount.id.toString());
+    this.handleDeleteAccount(this.selectedAccount.id.toString());
+  }
+
+  onAction(item: IAccountInfo, itemMenu: actionConfig) {
+    if (itemMenu.key === KeyAction.REMOVE) {
+      return this.onDelete(item);
+    }
+    this.onEdit(item);
   }
 
   onOpenModal() {
@@ -224,10 +230,42 @@ export class AccountManagementComponent implements OnInit {
   }
 
   onSubmit(formData: IAccountForm) {
+    if (this.isEditMode) return this.onEditSubmit(formData);
+    this.onCreateSubmit(formData);
+  }
+
+  onCreateSubmit(formData: IAccountForm) {
     this.loadingService.showLoading(true);
     console.log('OK');
     this.accountManagementHttpService
-      .createAccount(formData)
+      .createAccount({
+        ...formData,
+        departmentId: 1,
+        organizationId: 1,
+      })
+      .pipe(finalize(() => this.loadingService.showLoading(false)))
+      .subscribe({
+        next: () => {
+          this.isVisibleModal = false;
+          this.handleGetAccountManagement();
+        },
+        error: (error) => {
+          console.error('Tạo tài khoản thất bại:', error);
+        },
+      });
+  }
+
+  onEditSubmit(formData: IAccountForm) {
+    console.log('formData', formData);
+    this.loadingService.showLoading(true);
+    console.log('OK');
+    console.log('selectedAccount', this.selectedAccount);
+    this.accountManagementHttpService
+      .editAccount(this.selectedAccount?.id as any, {
+        ...formData,
+        departmentId: 1,
+        organizationId: 1,
+      })
       .pipe(finalize(() => this.loadingService.showLoading(false)))
       .subscribe({
         next: () => {

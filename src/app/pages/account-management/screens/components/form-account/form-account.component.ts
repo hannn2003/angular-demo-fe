@@ -60,18 +60,11 @@ export class FormAccountComponent {
 
   accountForm: FormGroup = this.formBuilder.group({
     username: ['', [Validators.required]],
-    avatar: ['', Validators.required],
     fullName: ['', [Validators.required]],
     roleId: [null, [Validators.required]],
     departmentId: [null, [Validators.required]],
     organizationId: [null, [Validators.required]],
-    phoneNumber: [
-      '',
-      Validators.compose([
-        Validators.required,
-        Validators.pattern(REGEX_PHONE_NUMBER),
-      ]),
-    ],
+    phoneNumber: ['', Validators.required],
     password: ['', Validators.required],
   });
 
@@ -111,8 +104,8 @@ export class FormAccountComponent {
   }
 
   onSubmit() {
-    console.log('this.accountForm.valid', this.accountForm.valid);
-    if (this.accountForm.valid) {
+    if (!this.accountForm.errors) {
+      console.log('this.accountForm.value', this.accountForm.value);
       this.submitted = false;
       this.forward.emit(this.accountForm.value);
     } else {

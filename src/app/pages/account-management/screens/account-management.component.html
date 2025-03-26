@@ -28,7 +28,7 @@
                 </button>
               </ng-container>
               <ng-template #DEFAULT_MENU>
-                <button pRipple
+                <button pRipple (click)="onAction(itemRecord, itemMenu)"
                   class="relative overflow-hidden w-full p-link flex align-items-center text-color hover:surface-200 border-noround">
                   <a class="p-menuitem-link">
                     <span [class]="itemMenu.icon"></span>
@@ -48,7 +48,7 @@
   <p-dialog [modal]="true" [(visible)]="isVisibleModal"
     [header]="isEditMode ? 'Chinh sua tài khoản' : 'Them moi tai khoan'" [style]="{ width: '50%' }"
     (onHide)="onCloseModal()">
-    <vks-form-account [listRoles]="listRoles" (unActiveForm)="onCloseModal()"
-      (forward)="onSubmit($event)"></vks-form-account>
+    <vks-form-account [listRoles]="listRoles" (unActiveForm)="onCloseModal()" (forward)="onSubmit($event)">
+    </vks-form-account>
   </p-dialog>
 </div>
