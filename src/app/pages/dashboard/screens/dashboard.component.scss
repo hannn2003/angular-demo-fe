@@ -1,0 +1,12 @@
+.dashboard-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  row-gap: 20px;
+}
+
+.dashboard-item-wrapper {
+  display: flex;
+  flex-direction: row;
+  column-gap: 200px;
+}

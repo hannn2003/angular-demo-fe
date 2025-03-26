@@ -1,8 +1,11 @@
-<!-- <vks-table-common
-  [configHeader]="configHeader"
-  [data]="listAccount"
-  [virtualScroll]="true"
->
-
-</vks-table-common> -->
 <h1>Màn dash board</h1>
+<div class="dashboard-wrapper">
+  <h2>Biểu đồ thống kê loại hình vụ án</h2>
+  <div class="dashboard-item-wrapper">
+    <p-chart type="bar" [data]="data" [options]="options" [width]="'800px'" [height]="'500px'" />
+    <p-chart type="doughnut" [data]="doughnutData" [options]="doughnutOptions" [width]="'500px'" [height]="'500px'" />
+  </div>
+  <div class="dashboard-item-wrapper">
+
+  </div>
+</div>
