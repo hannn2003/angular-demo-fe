@@ -326,4 +326,13 @@ export class AccountManagementComponent implements OnInit {
       error: (e) => console.log(e),
     });
   }
+
+  getRoleNameById(roleId: number | undefined): string {
+    if (roleId === undefined) {
+      return 'Unknown';
+    }
+
+    const role = this.listRoles.find((role) => role.value === roleId);
+    return role ? role.label : 'Unknown';
+  }
 }

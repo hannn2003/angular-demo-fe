@@ -19,7 +19,7 @@ export interface IUserInfo {
 }
 
 export interface IDropdownItem {
-  label: string | number;
+  label: string;
   value: string | number;
 }
 

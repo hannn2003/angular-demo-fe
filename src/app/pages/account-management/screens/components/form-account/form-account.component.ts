@@ -4,6 +4,7 @@ import {
   Output,
   Input,
   ViewChild,
+  SimpleChanges,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -15,6 +16,7 @@ import {
 import { IDropdownItem, REGEX_PHONE_NUMBER } from '@vks/app/shared/models';
 import { IAccountForm } from '@vks/app/pages/account-management/models';
 import { FileSelectEvent, FileUpload } from 'primeng/fileupload';
+import { IAccountInfo } from '@vks/app/https/account-management/interfaces';
 
 @Component({
   selector: 'vks-form-account',
@@ -23,6 +25,7 @@ import { FileSelectEvent, FileUpload } from 'primeng/fileupload';
 })
 export class FormAccountComponent {
   @Input() listRoles: IDropdownItem[] = [];
+  @Input() roleName: string | undefined = '';
 
   @Input()
   errors: Record<keyof IAccountForm, string[]> = {
@@ -36,17 +39,9 @@ export class FormAccountComponent {
     password: [],
   };
 
-  @Input()
-  accountDetail: Partial<IAccountForm> = {
-    username: '',
-    avatar: '',
-    fullName: '',
-    roleId: null,
-    departmentId: null,
-    organizationId: null,
-    phoneNumber: '',
-    password: '',
-  };
+  @Input() accountDetail: IAccountInfo | null = null;
+
+  @Input() isEditMode: boolean = false;
 
   @Output()
   unActiveForm = new EventEmitter();
@@ -70,7 +65,9 @@ export class FormAccountComponent {
 
   constructor(private formBuilder: FormBuilder) {}
   ngOnInit() {
-    console.log('Received roles from parent:', this.listRoles);
+    if (!this.isEditMode) {
+      this.resetForm();
+    }
   }
 
   onSelectAvatar(event: FileSelectEvent) {
@@ -103,14 +100,43 @@ export class FormAccountComponent {
     }
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['accountDetail'] && this.accountDetail) {
+      this.accountForm.patchValue({
+        username: this.accountDetail.username || '',
+        fullName: this.accountDetail.fullName || '',
+        roleId: this.accountDetail.roleId || null,
+        phoneNumber: this.accountDetail.phoneNumber || '',
+        password: '',
+      });
+
+      if (this.isEditMode) {
+        this.accountForm.get('password')?.clearValidators();
+        this.accountForm.get('password')?.updateValueAndValidity();
+      } else {
+        this.accountForm.get('password')?.setValidators([Validators.required]);
+        this.accountForm.get('password')?.updateValueAndValidity();
+      }
+    }
+
+    if (changes['isEditMode']) {
+      if (!this.isEditMode) {
+        this.resetForm();
+      }
+    }
+  }
+
   onSubmit() {
-    if (!this.accountForm.errors) {
-      console.log('this.accountForm.value', this.accountForm.value);
-      this.submitted = false;
-      this.forward.emit(this.accountForm.value);
-    } else {
-      this.submitted = true;
-      this.accountForm.markAllAsTouched();
+    this.submitted = true;
+
+    if (this.accountForm.valid) {
+      const formData = this.accountForm.value;
+
+      if (this.isEditMode) {
+        delete formData.password;
+      }
+
+      this.forward.emit(formData);
     }
   }
 

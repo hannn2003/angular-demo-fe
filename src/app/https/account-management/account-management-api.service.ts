@@ -17,6 +17,7 @@ const mockDataList: IListAccountInfo = {
       roleName: 'VIEN_TRUONG',
       departmentName: 'Lãnh đạo',
       organizationName: 'Tp.Nam Định',
+      phoneNumber: '0123455',
       status: 'Đang hoạt động',
     },
     {
@@ -26,6 +27,7 @@ const mockDataList: IListAccountInfo = {
       roleName: 'KIEM_SAT_VIEN',
       departmentName: 'Lãnh đạn',
       organizationName: 'Tp.Nam Định',
+      phoneNumber: '0123455',
       status: 'Chưa hoạt động',
     },
     {
@@ -35,6 +37,7 @@ const mockDataList: IListAccountInfo = {
       roleName: 'PHO_PHONG',
       departmentName: 'Thiết bị',
       organizationName: 'Tp.Nam Định',
+      phoneNumber: '0123455',
       status: 'Hoạt động',
     },
     {
@@ -44,6 +47,7 @@ const mockDataList: IListAccountInfo = {
       roleName: 'TRUONG_PHONG',
       departmentName: 'Hội sở',
       organizationName: 'Tp.Nam Định',
+      phoneNumber: '0123455',
       status: 'Chưa hoạt động',
     },
   ],

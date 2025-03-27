@@ -48,7 +48,8 @@
   <p-dialog [modal]="true" [(visible)]="isVisibleModal"
     [header]="isEditMode ? 'Chinh sua tài khoản' : 'Them moi tai khoan'" [style]="{ width: '50%' }"
     (onHide)="onCloseModal()">
-    <vks-form-account [listRoles]="listRoles" (unActiveForm)="onCloseModal()" (forward)="onSubmit($event)">
+    <vks-form-account [listRoles]="listRoles" (unActiveForm)="onCloseModal()" (forward)="onSubmit($event)"
+      [accountDetail]="selectedAccount" [roleName]="getRoleNameById(selectedAccount?.roleId)" [isEditMode]="isEditMode">
     </vks-form-account>
   </p-dialog>
 </div>
